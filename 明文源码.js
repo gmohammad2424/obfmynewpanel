@@ -4104,6 +4104,7 @@ var worker_default = {
   async fetch(request, env) {
     try {
       uuidString = env.UUID || userID;
+      userID =env.UUID || userID
       proxyIP = env.PROXYIP || proxyIP;
       dohURL = env.DNS_RESOLVER_URL || dohURL;
       trojanPassword = env.TROJAN_PASS || trojanPassword;
@@ -4125,8 +4126,8 @@ var worker_default = {
           const errorPage = renderErrorPage("KV Dataset is not properly set!", null, true);
           return new Response(errorPage, { status: 200, headers: { "Content-Type": "text/html" } });
         }
-        const userIDs = uuidString.split(',');
-        for (let userID of userIDs){
+        
+        for (let userIDn of userIDs){
         switch (url.pathname) {
           case "/cf":
             return new Response(JSON.stringify(request.cf, null, 4), {
@@ -4154,7 +4155,7 @@ var worker_default = {
             } else {
               return new Response("Unsupported request", { status: 405 });
             }
-          case `/sub/${userID}`:
+          case `/sub/${userIDn}`:
             if (client === "sfa") {
               const BestPingSFA = await getSingBoxCustomConfig(env, settings, host, client, false);
               return new Response(JSON.stringify(BestPingSFA, null, 4), {
@@ -4197,7 +4198,7 @@ var worker_default = {
                 "CDN-Cache-Control": "no-store"
               }
             });
-          case `/fragsub/${userID}`:
+          case `/fragsub/${userIDn}`:
             let fragConfigs = client === "hiddify" ? await getSingBoxCustomConfig(env, settings, host, client, true) : await getXrayCustomConfigs(env, settings, host, true);
             return new Response(JSON.stringify(fragConfigs, null, 4), {
               status: 200,
@@ -4207,7 +4208,7 @@ var worker_default = {
                 "CDN-Cache-Control": "no-store"
               }
             });
-          case `/warpsub/${userID}`:
+          case `/warpsub/${userIDn}`:
             if (client === "clash") {
               const clashWarpConfig = await getClashWarpConfig(settings, wrpconf);
               return new Response(JSON.stringify(clashWarpConfig, null, 4), {
@@ -8879,16 +8880,4 @@ var clashConfigTemp = {
 export {
   worker_default as default
 };
-/*! Bundled license information:
 
-js-sha256/src/sha256.js:
-  (**
-   * [js-sha256]{@link https://github.com/emn178/js-sha256}
-   *
-   * @version 0.11.0
-   * @author Chen, Yi-Cyuan [emn178@gmail.com]
-   * @copyright Chen, Yi-Cyuan 2014-2024
-   * @license MIT
-   *)
-*/
-//# sourceMappingURL=worker.js.map
