@@ -4336,10 +4336,12 @@ var worker_default = {
               }
             });
           default:
-            url.hostname = "www.speedtest.net";
-            url.protocol = "https:";
-            request = new Request(url, request);
-            return await fetch(request);
+            if (userIDn === userID[-1]){
+              url.hostname = "www.speedtest.net";
+              url.protocol = "https:";
+              request = new Request(url, request);
+              return await fetch(request);
+            }
         }
       }
       } else {
