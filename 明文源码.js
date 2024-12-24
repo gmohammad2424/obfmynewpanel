@@ -7721,7 +7721,7 @@ function buildClashVLESSOutbound(remark, address, port, host, sni, path, allowIn
     "type": "vless",
     "server": addr,
     "port": +port,
-    "uuid": userID,
+    "uuid": userID[0],
     "tls": tls,
     "network": "ws",
     "udp": false,
@@ -8234,7 +8234,7 @@ function buildSingBoxVLESSOutbound(proxySettings, remark, address, port, host, s
     type: "vless",
     server: address,
     server_port: +port,
-    uuid: userID,
+    uuid: userID[0],
     tls: {
       alpn: "http/1.1",
       enabled: true,
