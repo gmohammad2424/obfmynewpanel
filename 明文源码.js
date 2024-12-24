@@ -7140,6 +7140,18 @@ function buildXrayRoutingRules(proxySettings, isChain, isBalancer, isWorkerLess,
   return rules;
 }
 function buildXrayVLESSOutbound(tag2, address, port, host, sni, proxyIP2, isFragment, allowInsecure) {
+  let users =[];
+  for ( let user of userID){
+    let list = {
+      encryption: "none",
+      flow: "",
+      id: user,
+      level: 8,
+      security: "auto"
+    };
+    users.push(list);
+  }
+  
   let outbound = {
     protocol: "vless",
     settings: {
@@ -7147,15 +7159,7 @@ function buildXrayVLESSOutbound(tag2, address, port, host, sni, proxyIP2, isFrag
         {
           address,
           port: +port,
-          users: [
-            {
-              encryption: "none",
-              flow: "",
-              id: userID,
-              level: 8,
-              security: "auto"
-            }
-          ]
+          users: users
         }
       ]
     },
@@ -8881,3 +8885,4 @@ var clashConfigTemp = {
 export {
   worker_default as default
 };
+
