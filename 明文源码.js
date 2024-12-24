@@ -4154,6 +4154,7 @@ var worker_default = {
               return new Response("Unsupported request", { status: 405 });
             }
           case `/sub/${userIDn}`:
+            userID = userIDn
             if (client === "sfa") {
               const BestPingSFA = await getSingBoxCustomConfig(env, settings, host, client, false);
               return new Response(JSON.stringify(BestPingSFA, null, 4), {
@@ -4197,6 +4198,7 @@ var worker_default = {
               }
             });
           case `/fragsub/${userIDn}`:
+            userID = userIDn
             let fragConfigs = client === "hiddify" ? await getSingBoxCustomConfig(env, settings, host, client, true) : await getXrayCustomConfigs(env, settings, host, true);
             return new Response(JSON.stringify(fragConfigs, null, 4), {
               status: 200,
@@ -4207,6 +4209,7 @@ var worker_default = {
               }
             });
           case `/warpsub/${userIDn}`:
+            userID = userIDn
             if (client === "clash") {
               const clashWarpConfig = await getClashWarpConfig(settings, wrpconf);
               return new Response(JSON.stringify(clashWarpConfig, null, 4), {
