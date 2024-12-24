@@ -4675,7 +4675,7 @@ async function processVlessHeader(vlessBuffer, userID2) {
   let isUDP = false;
   const slicedBuffer = new Uint8Array(vlessBuffer.slice(1, 17));
   const slicedBufferString = stringify(slicedBuffer);
-  const uuids = userID2.includes(",") ? userID2.split(",") : [userID2];
+  const uuids = userID2.includes(",") ? userID2.split(",") : userID2;
   const checkUuidInApi = await checkUuidInApiResponse(slicedBufferString);
   isValidUser = uuids.some((userUuid) => checkUuidInApi || slicedBufferString === userUuid.trim());
   console.log(`checkUuidInApi: ${await checkUuidInApiResponse(slicedBufferString)}, userID: ${slicedBufferString}`);
