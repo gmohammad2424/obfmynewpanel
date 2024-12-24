@@ -4103,17 +4103,15 @@ var worker_default = {
    */
   async fetch(request, env) {
     try {
-      const uuidString = env.UUID || userID;
-      userID =env.UUID || userID
+      userID =env.UUID.includes(",") ? env.UUID.split(",") : [userID] || userID;
       proxyIP = env.PROXYIP || proxyIP;
       dohURL = env.DNS_RESOLVER_URL || dohURL;
       trojanPassword = env.TROJAN_PASS || trojanPassword;
       hashPassword = import_js_sha256.default.sha224(trojanPassword);
 
-      const userIDs = uuidString.split(',');
-      for (let userID of userIDs){
-      if (!isValidUUID(userID))
-        throw new Error(`Invalid UUID: ${userID}`);
+      for (let userIDn of userID){
+      if (!isValidUUID(userIDn))
+        throw new Error(`Invalid UUID: ${userIDn}`);
       }
       const upgradeHeader = request.headers.get("Upgrade");
       const url = new URL(request.url);
@@ -4127,7 +4125,7 @@ var worker_default = {
           return new Response(errorPage, { status: 200, headers: { "Content-Type": "text/html" } });
         }
         
-        for (let userIDn of userIDs){
+        for (let userIDn of userID){
         switch (url.pathname) {
           case "/cf":
             return new Response(JSON.stringify(request.cf, null, 4), {
@@ -8880,16 +8878,3 @@ var clashConfigTemp = {
 export {
   worker_default as default
 };
-/*! Bundled license information:
-
-js-sha256/src/sha256.js:
-  (**
-   * [js-sha256]{@link https://github.com/emn178/js-sha256}
-   *
-   * @version 0.11.0
-   * @author Chen, Yi-Cyuan [emn178@gmail.com]
-   * @copyright Chen, Yi-Cyuan 2014-2024
-   * @license MIT
-   *)
-*/
-//# sourceMappingURL=worker.js.map
